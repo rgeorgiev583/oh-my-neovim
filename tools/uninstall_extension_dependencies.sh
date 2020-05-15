@@ -44,6 +44,15 @@ if [ "$confirmation" = y ] || [ "$confirmation" = Y ]; then
             printf "Error [yum]: Removing dependencies for extension \"$extension\" failed\n"
           }
         fi
+      elif [ -f /etc/arch-release ]; then
+        if [ -f $OH_MY_NEOVIM/extensions/$extension/pacman ]; then
+          pacman_packages=$(cat $OH_MY_NEOVIM/extensions/$extension/pacman)
+          printf "${BLUE}Remove $pacman_packages with apt for $extension extension...${NORMAL}\n"
+          printf "${RED}sudo permissions required${NORMAL}\n"
+          sudo pacman -Rs $pacman_packages || {
+            printf "Error [pacman]: Removing dependencies for extension \"$extension\" failed\n"
+          }
+        fi
       fi
     done
   fi

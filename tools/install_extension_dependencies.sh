@@ -44,6 +44,15 @@ if [ "$confirmation" = y ] || [ "$confirmation" = Y ]; then
             printf "Error [yum]: Installation for extension \"$extension\" failed\n"
           }
         fi
+      elif [ -f /etc/arch-release ]; then
+        if [ -f $OH_MY_NEOVIM/extensions/$extension/pacman ]; then
+          pacman_packages=$(cat $OH_MY_NEOVIM/extensions/$extension/pacman)
+          printf "${BLUE}Install $pacman_packages with pacman for $extension extension...${NORMAL}\n"
+          printf "${RED}sudo permissions required${NORMAL}\n"
+          sudo pacman -S --needed --noconfirm $pacman_packages || {
+            printf "Error [pacman]: Installation for extension \"$extension\" failed\n"
+          }
+        fi
       fi
     done
   fi
@@ -91,7 +100,7 @@ if [ "$confirmation" = y ] || [ "$confirmation" = Y ]; then
       if [ "$CURRENT_SHELL" = "fish" ]; then
         add_to_shell_profile_if_pattern_not_found "set PATH \"$NPM_GLOBAL_FOLDER/bin \$PATH\"" "set PATH \"$NPM_GLOBAL_FOLDER/bin \$PATH\""
       else
-      add_to_shell_profile_if_pattern_not_found "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\"" "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\""
+        add_to_shell_profile_if_pattern_not_found "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\"" "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\""
       fi
       if hash yarn 2>/dev/null; then
         node_package_manager_command="yarn global add --global-folder $NPM_GLOBAL_FOLDER"
