@@ -24,8 +24,10 @@ fi
 # which may fail on systems lacking tput or terminfo
 set -e
 
+CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
+FISH_ENVFILE=~/.config/fish/conf.d/_environment.fish
+
 add_to_shell_profile_if_pattern_not_found () {
-  CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
   if [ "$CURRENT_SHELL" = "zsh" ]; then
     grep -q "$1" ~/.zshrc || echo "\n$2" >> ~/.zshrc
   elif [ "$CURRENT_SHELL" = "bash" ]; then
@@ -34,18 +36,21 @@ add_to_shell_profile_if_pattern_not_found () {
     else
       grep -q "$1" ~/.bashrc || echo "\n$2" >> ~/.bashrc
     fi
+  elif [ "$CURRENT_SHELL" = "fish" ]; then
+    grep -q "$1" "$FISH_ENVFILE" || echo "\n$2" >> "$FISH_ENVFILE"
   else
     grep -q "$1" ~/.profile || echo "\n$2" >> ~/.profile
   fi
 }
 
 edit_pattern_in_shell_profile () {
-CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
 if [ "$(uname)" = Darwin ]; then
   if [ "$CURRENT_SHELL" = "zsh" ]; then
     sed -i "" "s/$1/$2/g" ~/.zshrc
   elif [ "$CURRENT_SHELL" = "bash" ]; then
     sed -i "" "s/$1/$2/g" ~/.bash_profile
+  elif [ "$CURRENT_SHELL" = "fish" ]; then
+    sed -i "" "s/$1/$2/g" "$FISH_ENVFILE"
   else
     sed -i "" "s/$1/$2/g" ~/.profile
   fi
@@ -54,6 +59,8 @@ else
     sed -i "s/$1/$2/g" ~/.zshrc
   elif [ "$CURRENT_SHELL" = "bash" ]; then
     sed -i "s/$1/$2/g" ~/.bashrc
+  elif [ "$CURRENT_SHELL" = "fish" ]; then
+    sed -i "s/$1/$2/g" "$FISH_ENVFILE"
   else
     sed -i "s/$1/$2/g" ~/.profile
   fi
