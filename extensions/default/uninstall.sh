@@ -8,4 +8,8 @@ elif [ "$OS_TYPE" = Linux ]; then
   rm ~/.local/share/fonts/Sauce\ Code\ Pro*.ttf
 fi
 . $OH_MY_NEOVIM/tools/custom.sh
-edit_pattern_in_shell_profile "PATH=\"$(ruby -e 'print Gem.user_dir')/bin:\$PATH\"" ""
+if [ "$CURRENT_SHELL" = "fish" ]; then
+  edit_pattern_in_shell_profile "set PATH $(ruby -e 'print Gem.user_dir')/bin \$PATH" ""
+else
+  edit_pattern_in_shell_profile "PATH=\"$(ruby -e 'print Gem.user_dir')/bin:\$PATH\"" ""
+fi
