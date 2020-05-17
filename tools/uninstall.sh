@@ -21,12 +21,12 @@ fi
 env OH_MY_NEOVIM="$OH_MY_NEOVIM" OH_MY_NEOVIM_EXTENSIONS="$OH_MY_NEOVIM_EXTENSIONS" sh "$OH_MY_NEOVIM/tools/uninstall_extension_dependencies.sh"
 
 if [ "$CURRENT_SHELL" = "fish" ]; then
-  edit_pattern_in_shell_profile "(export|set -x|set --export) OH_MY_NEOVIM[ =].*" "set --export OH_MY_NEOVIM $OH_MY_NEOVIM"
-  edit_pattern_in_shell_profile "(export|set -x|set --export) OH_MY_NEOVIM_EXTENSIONS[ =].*" "set --export OH_MY_NEOVIM_EXTENSIONS \"$OH_MY_NEOVIM_EXTENSIONS\""
+  edit_pattern_in_shell_profile "(export|set -x|set --export) OH_MY_NEOVIM[ =].*" ""
+  edit_pattern_in_shell_profile "(export|set -x|set --export) OH_MY_NEOVIM_EXTENSIONS[ =].*" ""
 else
-  edit_pattern_in_shell_profile "export OH_MY_NEOVIM=.*" "export OH_MY_NEOVIM=$OH_MY_NEOVIM"
-  edit_pattern_in_shell_profile "export OH_MY_NEOVIM_EXTENSIONS=.*" "export OH_MY_NEOVIM_EXTENSIONS=\"$OH_MY_NEOVIM_EXTENSIONS\""
-  edit_pattern_in_shell_profile "source $OH_MY_NEOVIM/tools/functions.sh" "source $OH_MY_NEOVIM/tools/functions.sh"
+  edit_pattern_in_shell_profile "export OH_MY_NEOVIM=.*" ""
+  edit_pattern_in_shell_profile "export OH_MY_NEOVIM_EXTENSIONS=.*" ""
+  edit_pattern_in_shell_profile "source $OH_MY_NEOVIM/tools/functions.sh" ""
 fi
 
 if [ -d $OH_MY_NEOVIM ]; then
