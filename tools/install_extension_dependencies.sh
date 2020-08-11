@@ -98,9 +98,9 @@ if [ "$confirmation" = y ] || [ "$confirmation" = Y ]; then
       fi
       mkdir -p $NPM_GLOBAL_FOLDER
       if [ "$CURRENT_SHELL" = "fish" ]; then
-        add_to_shell_profile_if_pattern_not_found "set PATH \"$NPM_GLOBAL_FOLDER/bin \$PATH\"" "set PATH \"$NPM_GLOBAL_FOLDER/bin \$PATH\""
+        add_to_shell_profile_if_pattern_not_found "\b$NPM_GLOBAL_FOLDER/bin\b" "set PATH \"$NPM_GLOBAL_FOLDER/bin \$PATH\""
       else
-        add_to_shell_profile_if_pattern_not_found "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\"" "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\""
+        add_to_shell_profile_if_pattern_not_found "\b$NPM_GLOBAL_FOLDER/bin\b" "PATH=\"$NPM_GLOBAL_FOLDER/bin:\$PATH\""
       fi
       if hash yarn 2>/dev/null; then
         node_package_manager_command="yarn global add --global-folder $NPM_GLOBAL_FOLDER"

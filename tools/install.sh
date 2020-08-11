@@ -73,7 +73,7 @@ mkdir -p ~/.config/nvim
 ln -sf ~/.oh-my-neovim/init.vim ~/.config/nvim/init.vim
 
 if [ ! -f ~/.config/nvim/custom.init.vim ]; then
-  echo "\"Custom configurations\nsilent! colorscheme one" > ~/.config/nvim/custom.init.vim
+  echo -e "\"Custom configurations\nsilent! colorscheme one" > ~/.config/nvim/custom.init.vim
 fi
 
 if [ ! -f ~/.config/nvim/custom.plug.vim ]; then
@@ -100,13 +100,13 @@ fi
 
 printf "${GREEN}Configuring shell profile...${NORMAL}\n"
 if [ "$CURRENT_SHELL" = "fish" ]; then
-  add_to_shell_profile_if_pattern_not_found "(export|set -x|set --export) EDITOR[ =].*" "set --export EDITOR 'nvim'"
-  add_to_shell_profile_if_pattern_not_found "(export|set -x|set --export) OH_MY_NEOVIM[ =].*" "set --export OH_MY_NEOVIM $OH_MY_NEOVIM"
-  add_to_shell_profile_if_pattern_not_found "(export|set -x|set --export) OH_MY_NEOVIM_EXTENSIONS[ =].*" "set --export OH_MY_NEOVIM_EXTENSIONS \"$OH_MY_NEOVIM_EXTENSIONS\""
+  add_to_shell_profile_if_pattern_not_found "\bEDITOR\b" "set --export EDITOR 'nvim'"
+  add_to_shell_profile_if_pattern_not_found "\bOH_MY_NEOVIM\b" "set --export OH_MY_NEOVIM $OH_MY_NEOVIM"
+  add_to_shell_profile_if_pattern_not_found "\bOH_MY_NEOVIM_EXTENSIONS\b" "set --export OH_MY_NEOVIM_EXTENSIONS \"$OH_MY_NEOVIM_EXTENSIONS\""
 else
-  add_to_shell_profile_if_pattern_not_found "export EDITOR=.*" "export EDITOR='nvim'"
-  add_to_shell_profile_if_pattern_not_found "export OH_MY_NEOVIM=.*" "export OH_MY_NEOVIM=$OH_MY_NEOVIM"
-  add_to_shell_profile_if_pattern_not_found "export OH_MY_NEOVIM_EXTENSIONS=.*" "export OH_MY_NEOVIM_EXTENSIONS=\"$OH_MY_NEOVIM_EXTENSIONS\""
+  add_to_shell_profile_if_pattern_not_found "\bEDITOR\b" "export EDITOR='nvim'"
+  add_to_shell_profile_if_pattern_not_found "\bOH_MY_NEOVIM\b" "export OH_MY_NEOVIM=$OH_MY_NEOVIM"
+  add_to_shell_profile_if_pattern_not_found "\bOH_MY_NEOVIM_EXTENSIONS\b" "export OH_MY_NEOVIM_EXTENSIONS=\"$OH_MY_NEOVIM_EXTENSIONS\""
   add_to_shell_profile_if_pattern_not_found "source $OH_MY_NEOVIM/tools/functions.sh" "source $OH_MY_NEOVIM/tools/functions.sh"
 fi
 
